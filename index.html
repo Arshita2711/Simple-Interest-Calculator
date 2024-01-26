@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Simple Interest Calculator</title>
+</head>
+<body>
+    <div class="maindiv">
+        <h1>Simple Interest Calculator</h1>
+
+        <label for="principal">Amount</label>
+        <input type="number" id="principal" placeholder="Enter principal amount">
+
+        <label for="rate">Rate</label>
+        <input type="range" id="rate" min="1" max="20" value="10" step="0.25" oninput="updateRate()">
+        <span id="rate_val">10.25</span>%
+
+        <label for="years">No. of Years</label>
+        <input type="number" id="years" list="all_years" placeholder="Select number of years">
+        <datalist id="all_years">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </datalist>
+
+        <br />
+        Interest: <span id="result"></span><br/>
+
+        <button id="computeButton">Compute Interest</button>
+
+    </div>
+
+    <footer>
+        &#169; This Calculator belongs to Arshita
+    </footer>
+    <script>
+        document.getElementById("computeButton").addEventListener("click", compute);
+
+function compute() {
+    var principal = parseFloat(document.getElementById("principal").value);
+    var rate = parseFloat(document.getElementById("rate").value);
+    var years = parseInt(document.getElementById("years").value);
+    var resultElement = document.getElementById("result");
+
+    if (isNaN(principal) || isNaN(rate) || isNaN(years) || principal <= 0 || rate <= 0 || years <= 0) {
+        alert('Please enter valid positive numbers for all input fields!');
+        document.getElementById("principal").focus();
+    } else {
+        var interest = (principal * years * rate) / 100;
+        var year = new Date().getFullYear() + years;
+        var amount = principal + interest;
+
+        // Ensure precision to two decimal places
+        interest = interest.toFixed(2);
+        amount = amount.toFixed(2);
+
+        resultElement.innerHTML = `
+            You will receive an amount of <span style="color: #ff1d58;">₹${amount}</span>,<br>
+            in the year <span style="color: #ff1d58;">${year}</span>.<br>
+            The interest earned will be <span style="color: #ff1d58;">₹${interest}</span>.<br>
+        `;
+    }
+}
+
+function updateRate() {
+    var rateVal = document.getElementById("rate").value;
+    document.getElementById("rate_val").innerText = rateVal;
+}
+
+// Call updateRate initially to set the default rate value
+updateRate();
+
+    </script>
+
+
+</body>
+</html>
